@@ -1,6 +1,7 @@
 import React from "react";
 import Form from "../common/form";
 import Joi from "joi-browser";
+import Axios from "axios";
 
 class Authority extends Form {
   state = {
@@ -8,8 +9,6 @@ class Authority extends Form {
       name: "",
       phone: "",
       email: "",
-      dot: "",
-      description: "",
     },
     errors: {},
   };
@@ -18,12 +17,11 @@ class Authority extends Form {
     name: Joi.string().required().label("Name"),
     phone: Joi.number().required().label("Phone"),
     email: Joi.string().email().required().label("Email"),
-    dot: Joi.number().required().label("DOT"),
-    description: Joi.string(),
   };
 
   doSubmit = () => {
-    console.log("form submitted");
+    const { data } = this.state;
+    Axios.post("http://localhost:8080/email/getAuthority", data);
   };
 
   render() {
@@ -38,7 +36,7 @@ class Authority extends Form {
           government’s permission to get paid for hauling freight as your own
           trucking company.
         </p>
-        <form className="column container">
+        <form className="column container" onSubmit={this.handleSubmit}>
           {this.renderInput("name", "Name")}
           {this.renderInput("phone", "Phone")}
           {this.renderInput("email", "Email")}
