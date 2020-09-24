@@ -1,6 +1,7 @@
 import React from "react";
 import Form from "../common/form";
 import Joi from "joi-browser";
+import { carrierPacket } from "./serviceRequest";
 
 class CarrierPacket extends Form {
   state = {
@@ -23,14 +24,16 @@ class CarrierPacket extends Form {
   };
 
   doSubmit = () => {
-    console.log("form submitted");
+    const { data } = this.state;
+    carrierPacket(data);
+    this.setState({ showSuccessful: true });
   };
 
   render() {
     return (
       <div className="row jumbotron jumbotron-fluid pl-4 pr-3">
         <h1>Carrier Packet </h1>
-        <p >
+        <p>
           The carrier Packet is an agreement between the carrier and the broker
           and it allows the carrier to carry out the load with principles in
           place.
@@ -43,6 +46,13 @@ class CarrierPacket extends Form {
           {this.renderInput("description", "Description")}
           {this.renderButton("Submit")}
         </form>
+        {this.state.showSuccessful && (
+          <div class="alert alert-success mr-5 align-self-center" role="alert">
+            <h4 class="alert-heading">Service Request Successful!</h4>
+            <p className="pt-5">Your request has been submitted!</p>
+            <p>We will contact you within 24hrs</p>
+          </div>
+        )}
         <div style={{ color: "red" }} className="column container pl-5">
           <h3>Required Materials</h3>
           <ul>
