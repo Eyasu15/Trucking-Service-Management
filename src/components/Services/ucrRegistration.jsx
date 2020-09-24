@@ -2,11 +2,7 @@ import React from "react";
 import Form from "../common/form";
 import Joi from "joi-browser";
 import { ucrRegistration } from "./serviceRequest";
-import Modal from "react-bootstrap/Modal";
-import ModalBody from "react-bootstrap/ModalBody";
-import ModalFooter from "react-bootstrap/ModalFooter";
-import ModalTitle from "react-bootstrap/ModalTitle";
-import ModalHeader from "react-bootstrap/ModalHeader";
+import SuccessfulModal from "./successfulModal";
 
 class UcrRegistration extends Form {
   state = {
@@ -18,7 +14,7 @@ class UcrRegistration extends Form {
       description: "",
     },
     errors: {},
-    showSuccessful: true,
+    showSuccessful: false,
   };
 
   schema = {
@@ -37,6 +33,7 @@ class UcrRegistration extends Form {
 
   closeModal = () => {
     this.setState({ showSuccessful: false });
+    window.location.reload();
   };
   render() {
     return (
@@ -48,7 +45,7 @@ class UcrRegistration extends Form {
             registering and collecting fees from operators of vehicles
             participating in interstate commerce.
           </p>
-          <form className=" layout ">
+          <form className=" layout " onSubmit={this.handleSubmit}>
             {this.renderInput("name", "Name")}
             {this.renderInput("phone", "Phone")}
             {this.renderInput("email", "Email")}
@@ -57,24 +54,10 @@ class UcrRegistration extends Form {
             {this.renderButton("Submit")}
           </form>
         </div>
-        <Modal show={this.state.showSuccessful}>
-          <ModalHeader
-            class="alert alert-success mr-5 align-self-center"
-            role="alert"
-          >
-            <ModalTitle class="alert-heading">
-              Service Request Successful!
-            </ModalTitle>
-          </ModalHeader>
-          <ModalBody className="pt-5">
-            Your request has been submitted! We will contact you within 24hrs
-          </ModalBody>
-          <ModalFooter>
-            <button className="btn btn-success" onClick={this.closeModal}>
-              Ok
-            </button>
-          </ModalFooter>
-        </Modal>
+        <SuccessfulModal
+          show={this.state.showSuccessful}
+          onClose={this.closeModal}
+        />
       </div>
     );
   }

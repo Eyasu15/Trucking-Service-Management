@@ -45,7 +45,7 @@ class CarrierPacket extends Form {
           and it allows the carrier to carry out the load with principles in
           place.
         </p>
-        <form className=" column ">
+        <form className=" column " onSubmit={this.handleSubmit}>
           {this.renderInput("name", "Name")}
           {this.renderInput("phone", "Phone")}
           {this.renderInput("email", "Email")}
