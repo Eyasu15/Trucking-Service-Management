@@ -22,10 +22,9 @@ class Authority extends Form {
   };
 
   doSubmit = () => {
-    const { data } = this.state;
+    const { data, showSuccessful } = this.state;
     getAuthority(data);
-    alert("Request Submitted!");
-    setTimeout(window.location.reload(), 1000);
+    this.setState({ showSuccessful: true });
   };
 
   render() {
@@ -46,6 +45,13 @@ class Authority extends Form {
           {this.renderInput("email", "Email")}
           {this.renderButton("Submit")}
         </form>
+        {this.state.showSuccessful && (
+          <div class="alert alert-success mr-5 align-self-center" role="alert">
+            <h4 class="alert-heading">Service Request Successful!</h4>
+            <p className="pt-5">Your request has been submitted!</p>
+            <p>We will contact you within 24hrs</p>
+          </div>
+        )}
         <div style={{ color: "red" }} className="column container pl-5">
           {/* <h3>Required Materials</h3>
           <ul>
