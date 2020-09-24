@@ -2,6 +2,7 @@ import React from "react";
 import Form from "../common/form";
 import Joi from "joi-browser";
 import Axios from "axios";
+import { getAuthority } from "./serviceRequest";
 
 class Authority extends Form {
   state = {
@@ -11,6 +12,7 @@ class Authority extends Form {
       email: "",
     },
     errors: {},
+    showSuccessful: false,
   };
 
   schema = {
@@ -21,7 +23,8 @@ class Authority extends Form {
 
   doSubmit = () => {
     const { data } = this.state;
-    Axios.post("http://localhost:8080/email/getAuthority", data);
+    getAuthority(data);
+    alert("Request Submitted!");
   };
 
   render() {
