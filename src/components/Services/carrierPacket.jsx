@@ -13,6 +13,7 @@ class CarrierPacket extends Form {
       description: "",
     },
     errors: {},
+    showSuccessful: false,
   };
 
   schema = {
