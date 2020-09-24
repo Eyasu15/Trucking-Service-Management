@@ -1,8 +1,12 @@
 import React from "react";
 import Form from "../common/form";
 import Joi from "joi-browser";
-import Axios from "axios";
 import { getAuthority } from "./serviceRequest";
+import Modal from "react-bootstrap/Modal";
+import ModalBody from "react-bootstrap/ModalBody";
+import ModalFooter from "react-bootstrap/ModalFooter";
+import ModalTitle from "react-bootstrap/ModalTitle";
+import ModalHeader from "react-bootstrap/ModalHeader";
 
 class Authority extends Form {
   state = {
@@ -22,9 +26,14 @@ class Authority extends Form {
   };
 
   doSubmit = () => {
-    const { data, showSuccessful } = this.state;
+    const { data } = this.state;
     getAuthority(data);
     this.setState({ showSuccessful: true });
+  };
+
+  closeModal = () => {
+    this.setState({ showSuccessful: false });
+    window.location.reload();
   };
 
   render() {
@@ -45,13 +54,24 @@ class Authority extends Form {
           {this.renderInput("email", "Email")}
           {this.renderButton("Submit")}
         </form>
-        {this.state.showSuccessful && (
-          <div class="alert alert-success mr-5 align-self-center" role="alert">
-            <h4 class="alert-heading">Service Request Successful!</h4>
-            <p className="pt-5">Your request has been submitted!</p>
-            <p>We will contact you within 24hrs</p>
-          </div>
-        )}
+        <Modal show={this.state.showSuccessful}>
+          <ModalHeader
+            class="alert alert-success mr-5 align-self-center"
+            role="alert"
+          >
+            <ModalTitle class="alert-heading">
+              Service Request Successful!
+            </ModalTitle>
+          </ModalHeader>
+          <ModalBody className="pt-5">
+            Your request has been submitted! We will contact you within 24hrs
+          </ModalBody>
+          <ModalFooter>
+            <button className="btn btn-success" onClick={this.closeModal}>
+              Ok
+            </button>
+          </ModalFooter>
+        </Modal>
         <div style={{ color: "red" }} className="column container pl-5">
           {/* <h3>Required Materials</h3>
           <ul>
