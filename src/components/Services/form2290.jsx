@@ -1,6 +1,8 @@
 import React from "react";
 import Form from "../common/form";
 import Joi from "joi-browser";
+import { form2290Request } from "./serviceRequest";
+import SuccessfulModal from "./successfulModal";
 
 class form2290 extends Form {
   state = {
@@ -12,6 +14,7 @@ class form2290 extends Form {
       description: "",
     },
     errors: {},
+    showSuccessful: false,
   };
 
   schema = {
@@ -23,7 +26,14 @@ class form2290 extends Form {
   };
 
   doSubmit = () => {
-    console.log("form submitted");
+    const { data } = this.state;
+    form2290Request(data);
+    this.setState({ showSuccessful: true });
+  };
+
+  closeModal = () => {
+    this.setState({ showSuccessful: false });
+    window.location.reload();
   };
 
   render() {
@@ -38,7 +48,7 @@ class form2290 extends Form {
           out and pay the tax due on a used taxable vehicle acquired and used
           during the period of July 2020 to July 2021.
         </p>
-        <form className=" column ">
+        <form className=" column " onSubmit={this.handleSubmit}>
           {this.renderInput("name", "Name")}
           {this.renderInput("phone", "Phone")}
           {this.renderInput("email", "Email")}
@@ -46,6 +56,10 @@ class form2290 extends Form {
           {this.renderInput("description", "Description")}
           {this.renderButton("Submit")}
         </form>
+        <SuccessfulModal
+          show={this.state.showSuccessful}
+          onClose={this.closeModal}
+        />
         <div style={{ color: "red" }} className="column container pl-5">
           <h3>Required Materials</h3>
           <ul>
