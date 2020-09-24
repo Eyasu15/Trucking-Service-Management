@@ -22,7 +22,7 @@ function form2290Request(data) {
   Axios.post(url + "/form2290", data);
 }
 
-function ifta(data) {
+function iftaRequest(data) {
   Axios.post(url + "/ifta", data);
 }
 
@@ -32,6 +32,6 @@ export {
   cabCard,
   carrierPacket,
   dispatch,
-  ifta,
+  iftaRequest,
   form2290Request,
 };

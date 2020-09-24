@@ -1,6 +1,8 @@
 import React from "react";
 import Form from "../common/form";
 import Joi from "joi-browser";
+import { iftaRequest } from "./serviceRequest";
+import SuccessfulModal from "./successfulModal";
 
 class Ifta extends Form {
   state = {
@@ -12,6 +14,7 @@ class Ifta extends Form {
       description: "",
     },
     errors: {},
+    showSuccessful: false,
   };
 
   schema = {
@@ -23,7 +26,14 @@ class Ifta extends Form {
   };
 
   doSubmit = () => {
-    console.log("form submitted");
+    const { data } = this.state;
+    iftaRequest(data);
+    this.setState({ showSuccessful: true });
+  };
+
+  closeModal = () => {
+    this.setState({ showSuccessful: false });
+    window.location.reload();
   };
 
   render() {
@@ -39,7 +49,7 @@ class Ifta extends Form {
           your account. You must file a return even if you traveled no miles and
           used no taxable fuel during the quarter.
         </p>
-        <form className=" layout ">
+        <form className=" layout " onSubmit={this.handleSubmit}>
           {this.renderInput("name", "Name")}
           {this.renderInput("phone", "Phone")}
           {this.renderInput("email", "Email")}
@@ -47,6 +57,10 @@ class Ifta extends Form {
           {this.renderInput("description", "Description")}
           {this.renderButton("Submit")}
         </form>
+        <SuccessfulModal
+          show={this.state.showSuccessful}
+          onClose={this.closeModal}
+        />
       </div>
     );
   }
