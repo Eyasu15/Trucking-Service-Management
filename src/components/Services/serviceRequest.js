@@ -5,5 +5,33 @@ const url = "http://localhost:8080/service";
 function getAuthority(data) {
   Axios.post(url + "/getAuthority", data);
 }
+function ucrRegistration(data) {
+  Axios.post(url + "/ucrRegistration", data);
+}
+function cabCard(data) {
+  Axios.post(url + "/cabcard", data);
+}
+function carrierPacket(data) {
+  Axios.post(url + "/carrierPacket", data);
+}
+function dispatch(data) {
+  Axios.post(url + "/dispatch", data);
+}
 
-export { getAuthority };
+function form2290(data) {
+  Axios.post(url + "/form2290", data);
+}
+
+function ifta(data) {
+  Axios.post(url + "/ifta", data);
+}
+
+export {
+  getAuthority,
+  ucrRegistration,
+  cabCard,
+  carrierPacket,
+  dispatch,
+  ifta,
+  form2290,
+};

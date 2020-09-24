@@ -2,6 +2,7 @@ import React from "react";
 import Form from "../common/form";
 import Joi from "joi-browser";
 import { Container, Row, Col } from "react-bootstrap";
+import { cabCard } from "./serviceRequest";
 
 class CabCard extends Form {
   state = {
@@ -13,6 +14,7 @@ class CabCard extends Form {
       description: "",
     },
     errors: {},
+    showSuccessful: false,
   };
 
   schema = {
@@ -24,7 +26,9 @@ class CabCard extends Form {
   };
 
   doSubmit = () => {
-    console.log("form submitted");
+    const { data } = this.state;
+    cabCard(data);
+    this.setState({ showSuccessful: true });
   };
 
   render() {
@@ -48,7 +52,10 @@ class CabCard extends Form {
                 {this.renderInput("phone", "Phone")}
                 {this.renderInput("email", "Email")}
                 {this.renderInput("dot", "DOT #")}
-                {this.renderInput("description", "Description of what you need.")}
+                {this.renderInput(
+                  "description",
+                  "Description of what you need."
+                )}
                 {
                   <div class="form-group">
                     {" "}
@@ -59,12 +66,22 @@ class CabCard extends Form {
                 }
                 {this.renderButton("Submit")}
               </form>
+              {this.state.showSuccessful && (
+                <div
+                  class="alert alert-success mr-5 align-self-center"
+                  role="alert"
+                >
+                  <h4 class="alert-heading">Service Request Successful!</h4>
+                  <p className="pt-5">Your request has been submitted!</p>
+                  <p>We will contact you within 24hrs</p>
+                </div>
+              )}
             </Col>
             <Col>
               <br />
 
-              <ul style={{ color: 'red' }}className="pr-3 float-right  ">
-                <h5 >Required Items*</h5>
+              <ul style={{ color: "red" }} className="pr-3 float-right  ">
+                <h5>Required Items*</h5>
                 <li>Driver License</li>
                 <li>SSN</li>
                 <li>Title of Truck</li>
