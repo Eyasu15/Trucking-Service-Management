@@ -25,6 +25,7 @@ class Authority extends Form {
     const { data } = this.state;
     getAuthority(data);
     alert("Request Submitted!");
+    setTimeout(window.location.reload(), 1000);
   };
 
   render() {
