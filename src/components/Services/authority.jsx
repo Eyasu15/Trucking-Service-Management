@@ -2,11 +2,7 @@ import React from "react";
 import Form from "../common/form";
 import Joi from "joi-browser";
 import { getAuthority } from "./serviceRequest";
-import Modal from "react-bootstrap/Modal";
-import ModalBody from "react-bootstrap/ModalBody";
-import ModalFooter from "react-bootstrap/ModalFooter";
-import ModalTitle from "react-bootstrap/ModalTitle";
-import ModalHeader from "react-bootstrap/ModalHeader";
+import SuccessfulModal from "./successfulModal";
 
 class Authority extends Form {
   state = {
@@ -54,24 +50,10 @@ class Authority extends Form {
           {this.renderInput("email", "Email")}
           {this.renderButton("Submit")}
         </form>
-        <Modal show={this.state.showSuccessful}>
-          <ModalHeader
-            class="alert alert-success mr-5 align-self-center"
-            role="alert"
-          >
-            <ModalTitle class="alert-heading">
-              Service Request Successful!
-            </ModalTitle>
-          </ModalHeader>
-          <ModalBody className="pt-5">
-            Your request has been submitted! We will contact you within 24hrs
-          </ModalBody>
-          <ModalFooter>
-            <button className="btn btn-success" onClick={this.closeModal}>
-              Ok
-            </button>
-          </ModalFooter>
-        </Modal>
+        <SuccessfulModal
+          show={this.state.showSuccessful}
+          onClose={this.closeModal}
+        />
         <div style={{ color: "red" }} className="column container pl-5">
           {/* <h3>Required Materials</h3>
           <ul>

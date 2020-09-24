@@ -3,6 +3,7 @@ import Form from "../common/form";
 import Joi from "joi-browser";
 import { Container, Row, Col } from "react-bootstrap";
 import { cabCard } from "./serviceRequest";
+import SuccessfulModal from "./successfulModal";
 
 class CabCard extends Form {
   state = {
@@ -31,6 +32,11 @@ class CabCard extends Form {
     this.setState({ showSuccessful: true });
   };
 
+  closeModal = () => {
+    this.setState({ showSuccessful: false });
+    window.location.reload();
+  };
+
   render() {
     return (
       <div className="row jumbotron jumbotron-fluid pl-4 pr-3">
@@ -47,7 +53,7 @@ class CabCard extends Form {
                 $1,500-$2,000, and varies by state and vehicle weight. Here is
                 the state list with links to each jurisdiction.
               </p>
-              <form className="col-xs-4">
+              <form className="col-xs-4" onSubmit={this.handleSubmit}>
                 {this.renderInput("name", "Name")}
                 {this.renderInput("phone", "Phone")}
                 {this.renderInput("email", "Email")}
@@ -66,16 +72,10 @@ class CabCard extends Form {
                 }
                 {this.renderButton("Submit")}
               </form>
-              {this.state.showSuccessful && (
-                <div
-                  class="alert alert-success mr-5 align-self-center"
-                  role="alert"
-                >
-                  <h4 class="alert-heading">Service Request Successful!</h4>
-                  <p className="pt-5">Your request has been submitted!</p>
-                  <p>We will contact you within 24hrs</p>
-                </div>
-              )}
+              <SuccessfulModal
+                show={this.state.showSuccessful}
+                onClose={this.closeModal}
+              />
             </Col>
             <Col>
               <br />
