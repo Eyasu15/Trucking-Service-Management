@@ -1,6 +1,8 @@
 import React from "react";
 import Form from "../common/form";
 import Joi from "joi-browser";
+import SuccessfulModal from "./successfulModal";
+import { dispatch } from "./serviceRequest";
 
 class Dispatch extends Form {
   state = {
@@ -12,6 +14,7 @@ class Dispatch extends Form {
       description: "",
     },
     errors: {},
+    showSuccessful: false,
   };
 
   schema = {
@@ -23,7 +26,14 @@ class Dispatch extends Form {
   };
 
   doSubmit = () => {
-    console.log("form submitted");
+    const { data } = this.state;
+    dispatch(data);
+    this.setState({ showSuccessful: true });
+  };
+
+  closeModal = () => {
+    this.setState({ showSuccessful: false });
+    window.location.reload();
   };
 
   render() {
@@ -36,7 +46,7 @@ class Dispatch extends Form {
           manner. They receive calls for truck services and contact their fleet
           of truck drivers to arrange the pickups and deliveries.
         </p>
-        <form className=" layout ">
+        <form className=" layout " onSubmit={this.handleSubmit}>
           {this.renderInput("name", "Name")}
           {this.renderInput("phone", "Phone")}
           {this.renderInput("email", "Email")}
@@ -46,8 +56,11 @@ class Dispatch extends Form {
           <br />
           <br />
           <p>Call or email Us to get a rate</p>
-          
         </form>
+        <SuccessfulModal
+          show={this.state.showSuccessful}
+          onClose={this.closeModal}
+        />
       </div>
     );
   }
